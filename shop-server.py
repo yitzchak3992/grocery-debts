@@ -13,13 +13,13 @@ data =[["yitzchak" ,"abalas" ,123456789 ,"0510101010" ,"31/12/2023" ,-44] ,
 
 #data = [[name,last_name,id,phone,date,debt]]
 with open("shop.csv" ,"w" ,newline="")as csvfiie:
-    # יצירת כותב CSV
+   
     writer = csv.writer(csvfiie)
 
-    # כתיבת הכותרת
+    # Writing the title
     writer.writerow(main_title)
 
-    # כתיבת שאר הנתונים
+    # Writing the rest of the data
     for row in data:
         writer.writerow(row)
 """
