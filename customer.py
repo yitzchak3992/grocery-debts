@@ -1,14 +1,14 @@
 class Customer:
     def __init__(
         self,
-        firts_name: str,
+        first_name: str,
         last_name: str,
         id: str,
         phone: str,
         date: str,
         debt: float,
     ):
-        self.__firts_name = firts_name
+        self.__first_name = first_name
         self.__last_name = last_name
         self.__id = id
         self.__phone = phone
@@ -16,6 +16,14 @@ class Customer:
         self.__debt = debt
         self.__right: Customer | None = None
         self.__left: Customer | None = None
+
+    @property
+    def first_name(self):
+        return self.__first_name
+    
+    @property
+    def last_name(self):
+        return self.__last_name
 
     @property
     def id(self):
@@ -45,7 +53,18 @@ class Customer:
         self.__left = now_left_node
 
     def __str__(self) -> str:
-        return f"{self.__firts_name} {self.__last_name} {self.__id} {self.__phone} {self.__date} {self.__debt}"
+        return f"{self.__first_name} {self.__last_name} {self.__id} {self.__phone} {self.__date} {self.__debt}"
+
+    # @property
+    def get_list(self) -> list[str | int]:
+        return [
+            self.__first_name,
+            self.__last_name,
+            self.__id,
+            self.__phone,
+            self.__date,
+            self.__debt,
+        ]
 
     # @staticmethod
     # def
