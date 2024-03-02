@@ -40,10 +40,13 @@ class Tree:
         row[-1] = float(row[-1])
         customer = self.search_id(row[2])
         if customer:
-            if row[1] != customer.first_name or row[2] != customer.last_name:
+            if row[0] != customer.first_name or row[1] != customer.last_name:
                 print(
                     "The ID exists under another name, the information will not be saved!"
                 )
+                print(row)
+                print(customer)
+                print(customer.first_name, customer.last_name)
                 return False
             customer.add_debt(row[-1])
             return True
@@ -78,3 +81,32 @@ class Tree:
         ret_list: list[str | int] = []
         self._print_customers(self.root, ret_list)
         return "\n".join(ret_list)
+
+    def search_for(self, feature: str, comparison: str, search: str):
+
+        def create__list(
+            node: Customer,
+            ret_list: list,
+            feature: str,
+            comparison: str,
+            search: str,
+        ):
+            if node == None:
+                return
+            create__list(node.left, ret_list, feature, comparison, search)
+            if feature != "debt":
+                if eval(f"node.{feature} {comparison} '{search}'"):
+                    ret_list.append(node)
+            else:
+                if eval(f"node.{feature} {comparison} {search}"):
+                    ret_list.append(node)
+            create__list(node.right, ret_list, feature, comparison, search)
+
+        ret_list = []
+        create__list(self.root, ret_list, feature, comparison, search)
+        ret_list.sort(key=lambda c: eval(f"c.{feature}"))
+        if ret_list:
+            for node in ret_list:
+                print(node)
+        else:
+            print("No suitable information found!")

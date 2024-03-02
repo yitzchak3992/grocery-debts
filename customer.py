@@ -37,6 +37,10 @@ class Customer:
         self.__debt = self.__debt + add
 
     @property
+    def date(self):
+        return self.__date
+
+    @property
     def right(self):
         return self.__right
 

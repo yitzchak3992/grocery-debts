@@ -5,13 +5,13 @@ from binary_search_tree import Tree
 import sys
 import os
 
-main_title = ["name", "last_name", "id", "phone", "debt", "date"]
+customer_details = ["first_name", "last_name", "id", "phone", "date", "debt"]
 
 data = [
-    ["yitzchak", "abalas", 123456789, "0510101010", "31/12/2023", -44],
+    ["yitzchak", "abeles", 123456789, "0510101010", "31/12/2023", -44],
     ["yosef", "Salton", 123465679, "0520101010", "01/12/2023", -21],
-    ["yitzchak", "abalas", 123456789, "0510101010", "31/12/2023", 70],
-    ["yitzchak", "abalas", 123456789, "0510101010", "31/12/2023", -15],
+    ["yitzchak", "abeles", 123456789, "0510101010", "31/12/2023", 70],
+    ["yitzchak", "abeles", 123456789, "0510101010", "31/12/2023", -15],
 ]
 """
 if sys.argv < 2:
@@ -28,7 +28,7 @@ if not os.path.exists(file_name):
 # with open("shop.csv" ,"w" ,newline="")as csvfiie:
 #     writer = csv.writer(csvfiie)
 #     # Writing the title
-#     writer.writerow(main_title)
+#     writer.writerow(customer_details)
 #     # Writing the rest of the data
 #     for row in data:
 #         writer.writerow(row)
@@ -69,7 +69,7 @@ with open("shop.csv", "r") as csvfile:
     for row in reader:
         # You need to check for correctness !!!
 
-        if row == main_title:
+        if row == customer_details:
             continue
         if check_validity(row):
             data_base_tree.set_customer(row)
@@ -90,13 +90,34 @@ while Tree:
     if command == "print" or command == "1":
         data_base_tree.print_by_debt()
 
-    if command == "set" or command == "2":
+    if command == "set":
         if check_validity(fields):
             if data_base_tree.set_customer(fields):
                 customer_document(fields)
 
     if command == "id" or command == "3":
         print(data_base_tree)
+
+    elif command == "4":
+        # command, fields = "select", "debt < -77"
+        # command, fields = "select", "first_name < y"
+        command, fields = "select", "id == 123456789"
+
+    if command == "select":
+        for comparison in [">", "<", "==", "!="]:
+            if comparison in fields:
+                feature, comparison, search = fields.partition(comparison)
+                feature, search = feature.strip(), search.strip()
+                if feature in customer_details:
+                    data_base_tree.search_for(feature, comparison, search)
+                    break
+                else:
+                    print(
+                        "No field selected from the following options", customer_details
+                    )
+                    break
+        else:
+            print("No comparison operation was typed (>,<,==,=!)")
 
     if command == "quit" or command == "0":
         quit()
